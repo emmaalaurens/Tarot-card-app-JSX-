@@ -1,0 +1,205 @@
+import React, { useState } from 'react';
+
+const tarotCards = [
+  {
+    name: 'The Fool',
+    description: 'Embrace new opportunities with an open mind and a sense of adventure. Trust in the journey ahead and take calculated risks.',
+    },
+    
+    {
+    name: 'The Magician',
+    description: 'Recognize your own power and potential. Use your skills and resources to manifest your desires and create positive change.',
+    },
+    
+    {
+    name: 'The High Priestess',
+    description: 'Tap into your intuition and inner wisdom. Take time for introspection and explore the depths of your subconscious mind for guidance.',
+    },
+    
+    {
+    name: 'The Empress',
+    description: 'Embrace nurturing energy and creativity. Connect with nature, express yourself, and cultivate abundance in all areas of your life.',
+    },
+    
+    {
+    name: 'The Emperor',
+    description: 'Take charge of your life and establish order and structure. Use your leadership skills to make decisions based on logic and reason.',
+    },
+    
+    {
+    name: 'The Hierophant',
+    description: 'Seek wisdom from trusted sources and established traditions. Honor spiritual guidance and find meaning through rituals and ceremonies.',
+    },
+    
+    {
+    name: 'The Lovers',
+    description: 'Make choices based on love and harmony. Cultivate meaningful relationships and embrace soul connections in all aspects of your life.',
+    },
+    
+    {
+    name: 'The Chariot',
+    description: 'Harness your determination and willpower. Overcome obstacles with focus, confidence, and a clear sense of direction.',
+    },
+    
+    {
+    name: 'Strength',
+    description: 'Find inner strength and courage to face challenges. Cultivate patience, compassion, and resilience as you overcome difficulties.',
+    },
+    
+    {
+    name: 'The Hermit',
+    description: 'Take time for self-reflection and seek answers within. Withdraw from the external world to find wisdom and guidance.',
+    },
+    
+    {
+    name: 'Wheel of Fortune',
+    description: 'Embrace the cycles of life and seize opportunities. Adapt to changes and trust in the natural flow of destiny.',
+    },
+    
+    {
+    name: 'Justice',
+    description: 'Seek fairness and balance in all situations. Make decisions with integrity and consider the karmic consequences of your actions.',
+    },
+    
+    {
+    name: 'The Hanged Man',
+    description: 'Surrender to the flow of life and gain new perspectives. Let go of old patterns and embrace self-surrender for personal growth.',
+    },
+    
+    {
+    name: 'Death',
+    description: 'Embrace transformation and let go of what no longer serves you. Embrace endings as opportunities for new beginnings.',
+    },
+    
+    {
+    name: 'Temperance',
+    description: 'Find balance and moderation in all aspects of your life. Blend opposing forces and seek harmony within yourself and your relationships.',
+    },
+    
+    {
+    name: 'The Devil',
+    description: 'Break free from negative patterns and attachments. Release self-imposed limitations and embrace personal liberation.',
+    },
+    
+    {
+    name: 'The Tower',
+    description: 'Embrace sudden change and upheaval as opportunities for growth. Release old structures and patterns to make way for transformation.',
+    },
+    
+    {
+    name: 'The Star',
+    description: 'Have faith and find inspiration in challenging times. Seek guidance from higher realms and allow hope to guide you forward.',
+    },
+    
+    {
+    name: 'The Moon',
+    description: 'Trust your intuition and navigate the realm of emotions. Embrace your dreams and subconscious wisdom as valuable guidance.',
+    },
+    
+    {
+    name: 'The Sun',
+    description: 'Embrace joy, vitality, and success. Allow your inner light to shine brightly and bask in positive energy.',
+    },
+];
+
+
+
+// Function: random cards. selectedIndices means it won't generate the same card twice. 
+function App() {
+  const [randomCards, setRandomCards] = useState([]);
+  const [textInput, setTextInput] = useState('');
+  const [enteredText, setEnteredText] = useState('');
+
+  const handleInputChange = (event) => {
+    setTextInput(event.target.value);
+  };
+
+  const generateRandomCards = () => {
+    const generatedCards = [];
+    const selectedIndices = [];
+
+    while (generatedCards.length < 3) {
+      const randomIndex = Math.floor(Math.random() * tarotCards.length);
+      if (!selectedIndices.includes(randomIndex)) {
+        const randomCard = tarotCards[randomIndex];
+        generatedCards.push(randomCard);
+        selectedIndices.push(randomIndex);
+      }
+    }
+
+    setRandomCards(generatedCards);
+    setEnteredText(textInput); // Set the entered text
+    setTextInput(''); // Clear the input text after generating random cards
+  };
+  
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.title}>Tarot Card Generator</h1>
+      <div style={styles.centered}>
+        <input type="text" value={textInput} onChange={handleInputChange} style={styles.textInput} />
+        <button onClick={generateRandomCards} style={styles.button}>Draw Three Cards</button>
+      </div>
+      {enteredText && <p>You entered: {enteredText}</p>}
+  
+      <div style={styles.cardContainer}>
+        {randomCards.map((card, index) => (
+          <div key={index} style={styles.card}>
+            <h3 style={styles.cardTitle}>{card.name}</h3>
+            <p style={styles.cardDescription}>{card.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+// CSS 
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'pink', 
+  },
+  centered: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '20px',
+  },
+  textInput: {
+    margin: '30px',
+    padding: '20px',
+    width: '600px', 
+  },
+  button: {
+    margin: '10px',
+    padding: '8px 16px',
+  },
+  cardContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'pink', 
+  },
+  card: {
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    padding: '10px',
+    width: '200px',
+    backgroundColor: '#f2f2f2',
+  },
+  cardTitle: {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '5px',
+  },
+  cardDescription: {
+    fontSize: '14px',
+    color: '#666',
+  },
+};
+
+export default App;
